@@ -1,0 +1,71 @@
+import { Brain, FileText, X, Camera } from "lucide-react";
+import Loading from "../../loading";
+
+const UploadFiles = ({
+  uploadedFiles,
+  removeFile,
+  formatFileSize,
+  handleAnalyzeFiles,
+  isAnalyzingFiles,
+}) => {
+  return (
+    <div>
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Uploaded Files
+        </h3>
+        <div className="space-y-3">
+          {uploadedFiles.map((file) => (
+            <div
+              key={file.id}
+              className="flex items-center justify-between bg-gray-50 rounded-lg p-4"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="bg-blue-100 p-2 rounded-lg">
+                  {file.type === "pdf" || file.type === "document" ? (
+                    <FileText className="w-5 h-5 text-teal-600" />
+                  ) : (
+                    <Camera className="w-5 h-5 text-teal-600" />
+                  )}
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">{file.name}</p>
+                  <p className="text-sm text-gray-500">
+                    {formatFileSize(file.size)} • {file.type}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => removeFile(file.id)}
+                className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50 transition-colors duration-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={handleAnalyzeFiles}
+          disabled={isAnalyzingFiles}
+          className="mt-4 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+        >
+          {isAnalyzingFiles ? (
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+          ) : (
+            <Brain className="w-5 h-5" />
+          )}
+          <span>{isAnalyzingFiles ? "Analyzing..." : "Analyze File"}</span>
+        </button>
+       <div className="justify-center items-center text-center">
+         <span className="text-red-500 text-center ">
+          Note:waiting some time after clickeing button
+        </span>
+       </div>
+        {!isAnalyzingFiles && <div className="mt-1 flex justify-center"></div>}
+      </div>
+    </div>
+  );
+};
+
+export default UploadFiles;

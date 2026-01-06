@@ -1,10 +1,6 @@
 "use client";
-import { usePathname } from "next/navigation";
 
 export default function NotFound() {
-  const pathname = usePathname();
-  console.log(pathname);
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="text-center max-w-md mx-auto">
